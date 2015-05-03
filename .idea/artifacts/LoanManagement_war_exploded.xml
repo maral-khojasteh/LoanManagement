@@ -1,0 +1,21 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="LoanManagement:war exploded">
+    <output-path>$PROJECT_DIR$/target/project4</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="LoanManagement/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="LoanManagement" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.35" />
+          <element id="library" level="project" name="Maven: javax.servlet:jsp-api:2.0" />
+          <element id="library" level="project" name="Maven: javax.servlet:servlet-api:2.5" />
+          <element id="library" level="project" name="Maven: org.hibernate:hibernate-core:4.3.9" />
+          <element id="library" level="project" name="org.hibernate:hibernate-core:4.3.9.Final" />
+          <element id="library" level="project" name="mysql:mysql-connector-java:5.1.35" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,107 @@
+<!DOCTYPE web-app PUBLIC
+        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+
+    <display-name>Archetype Created Web Application</display-name>
+
+    <servlet>
+        <servlet-name>SubmitPerson</servlet-name>
+        <servlet-class>com.dotinschool.controller.SubmitPersonServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SubmitCompany</servlet-name>
+        <servlet-class>com.dotinschool.controller.SubmitCompanyServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchPerson</servlet-name>
+        <servlet-class>com.dotinschool.controller.SearchPersonServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchCompany</servlet-name>
+        <servlet-class>com.dotinschool.controller.SearchCompanyServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditPerson</servlet-name>
+        <servlet-class>com.dotinschool.controller.EditPersonServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditCompany</servlet-name>
+        <servlet-class>com.dotinschool.controller.EditCompanyServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeletePerson</servlet-name>
+        <servlet-class>com.dotinschool.controller.DeletePersonServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteCompany</servlet-name>
+        <servlet-class>com.dotinschool.controller.DeleteCompanyServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShowPerson</servlet-name>
+        <servlet-class>com.dotinschool.controller.ShowPersonServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShowCompany</servlet-name>
+        <servlet-class>com.dotinschool.controller.ShowCompanyServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SubmitLoanType</servlet-name>
+        <servlet-class>com.dotinschool.controller.SubmitLoanTypeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Test</servlet-name>
+        <servlet-class>com.dotinschool.controller.TestServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SubmitPerson</servlet-name>
+        <url-pattern>/submitPerson</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SubmitCompany</servlet-name>
+        <url-pattern>/submitCompany</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchPerson</servlet-name>
+        <url-pattern>/searchPerson</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchCompany</servlet-name>
+        <url-pattern>/searchCompany</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditPerson</servlet-name>
+        <url-pattern>/editPerson</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditCompany</servlet-name>
+        <url-pattern>/editCompany</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeletePerson</servlet-name>
+        <url-pattern>/deletePerson</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteCompany</servlet-name>
+        <url-pattern>/deleteCompany</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShowPerson</servlet-name>
+        <url-pattern>/showPerson</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShowCompany</servlet-name>
+        <url-pattern>/showCompany</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SubmitLoanType</servlet-name>
+        <url-pattern>/submitLoanType</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Test</servlet-name>
+        <url-pattern>/test</url-pattern>
+    </servlet-mapping>
+
+</web-app>

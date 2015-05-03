@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>مدیریت مشتری</title>
+    <script language="JavaScript" src="js/home.js"></script>
+</head>
+<body onload="showManagementButton()">
+<form action="submitPerson.html" id="submitPersonId" name="submitPerson">
+    <input type="submit" value="مشتری جدید"  id="submitPersonBTN">
+</form>
+<br/>
+<form action="searchPerson.html" id="searchPersonId" name="searchPerson">
+    <input type="submit" value="جستجوی مشتری"  id="searchPersonBTN">
+</form>
+<form action="submitCompany.html" id="submitCompanyId" name="submitCompany">
+    <input type="submit" value="مشتری جدید" id="submitCompanyBTN">
+</form>
+<br/>
+<form action="searchCompany.html" id="searchCompanyId" name = "searchCompany">
+    <input type="submit" value="جستجوی مشتری" id="searchCompanyBTN">
+</form>
+<script>
+    function showManagementButton(){
+        var params = window.location.search.substr(1).split("=");
+        if (params[0] == "legal") {
+            document.getElementById("submitPersonBTN").style.display = "none";
+            document.getElementById("searchPersonBTN").style.display = "none";
+        } else {
+            document.getElementById("submitCompanyBTN").style.display = "none";
+            document.getElementById("searchCompanyBTN").style.display = "none";
+        }
+    }
+</script>
+</body>
+</html>
