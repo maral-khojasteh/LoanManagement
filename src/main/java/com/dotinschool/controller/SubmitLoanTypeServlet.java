@@ -1,6 +1,5 @@
 package com.dotinschool.controller;
 
-import com.dotinschool.model.bl.GrantConditionService;
 import com.dotinschool.model.bl.LoanTypeService;
 import com.dotinschool.model.to.GrantCondition;
 import com.dotinschool.model.to.LoanType;
@@ -12,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -21,11 +22,11 @@ import java.util.Set;
 public class SubmitLoanTypeServlet extends HttpServlet {
 
     private LoanTypeService loanTypeService;
-    private GrantConditionService grantConditionService;
+//    private GrantConditionService grantConditionService;
 
     public SubmitLoanTypeServlet(){
         loanTypeService = new LoanTypeService();
-        grantConditionService = new GrantConditionService();
+//        grantConditionService = new GrantConditionService();
     }
 
     @Override
@@ -43,6 +44,7 @@ public class SubmitLoanTypeServlet extends HttpServlet {
         String[] minimumAmount = request.getParameterValues("minimum_amount");
         String[] maximumAmount = request.getParameterValues("maximum_amount");
         Set<GrantCondition> grantConditions = new HashSet<GrantCondition>();
+        List<GrantCondition> grantConditionsList= new ArrayList<GrantCondition>();
         while (rowCount != 0){
             GrantCondition grantCondition = new GrantCondition();
             grantCondition.setName(conditionNames[rowCount - 1]);
@@ -54,12 +56,13 @@ public class SubmitLoanTypeServlet extends HttpServlet {
             }catch (NumberFormatException e){
                 forwardToResultPage("وارد کردن حداقل و حداکثر مبلغ و مدت قرارداد اجباری است. مبلغ و مدت حتما باید عدد باشد", request, response, true);
             }
-            try {
-                grantConditionService.saveGrantCondition(grantCondition);
-            }catch(ConstraintViolationException e){
-                forwardToResultPage("وارد کردن نام شرط اعطا اجباری است", request, response, true);
-            }
+//            try {
+//                grantConditionService.saveGrantCondition(grantCondition);
+//            }catch(ConstraintViolationException e){
+//                forwardToResultPage("وارد کردن نام شرط اعطا اجباری است", request, response, true);
+//            }
             grantConditions.add(grantCondition);
+            grantConditionsList.add(grantCondition);
             rowCount--;
         }
         String loanTypeName = request.getParameter("loan_type_name").trim();
@@ -73,9 +76,9 @@ public class SubmitLoanTypeServlet extends HttpServlet {
         }
         loanType.setConditions(grantConditions);
         try {
-            loanTypeService.saveLoanType(loanType);
+            loanTypeService.saveLoanType(loanType, grantConditionsList);
         }catch (ConstraintViolationException e){
-            forwardToResultPage("وارد کردن نام نوع تسهیلات اجباری است", request, response, true);
+            forwardToResultPage("وارد کردن نام نوع تسهیلات و نام شرط اعطا اجباری است", request, response, true);
         }
         forwardToResultPage("نوع تسهیلات و شرایط اعطا با موفقیت ثبت شد", request, response, false);
 

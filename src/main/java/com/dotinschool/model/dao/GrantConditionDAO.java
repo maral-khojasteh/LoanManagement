@@ -14,8 +14,12 @@ public class GrantConditionDAO {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
-        session.saveOrUpdate(grantCondition);
-        session.getTransaction().commit();
+        try {
+            session.saveOrUpdate(grantCondition);
+            session.getTransaction().commit();
+        }catch (RuntimeException e) {
+            session.getTransaction().rollback();
+        }
     }
 
 

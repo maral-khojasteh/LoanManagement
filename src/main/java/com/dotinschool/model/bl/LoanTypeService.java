@@ -1,6 +1,7 @@
 package com.dotinschool.model.bl;
 
 import com.dotinschool.model.dao.LoanTypeDAO;
+import com.dotinschool.model.to.GrantCondition;
 import com.dotinschool.model.to.LoanType;
 
 import java.util.List;
@@ -16,8 +17,8 @@ public class LoanTypeService {
         loanTypeDAO = new LoanTypeDAO();
     }
 
-    public void saveLoanType(LoanType loanType) {
-        loanTypeDAO.save(loanType);
+    public void saveLoanType(LoanType loanType, List<GrantCondition> grantConditionsList) {
+        loanTypeDAO.save(loanType, grantConditionsList);
     }
 
     public List<LoanType> findAll() {

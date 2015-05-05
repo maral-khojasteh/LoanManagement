@@ -80,5 +80,15 @@ function addCondition(){
     }
 }
 
+function checkRowNum(){
+    var table= document.getElementById("conditionsTableId");
+    if(table.rows.length - 1 == 0){
+        document.getElementById("error_id_2").innerHTML = "<p dir='rtl' align='center'>وارد کردن حداقل یک شرط اعطا اجباری است</p>";
+    }
+    else{
+        conditions_form.submit();
+    }
+}
+
 
 

@@ -18,10 +18,10 @@
            <br />
            <a class="link-layout" href="loan_type.jsp" dir="rtl">تسهیلات</a>
            <%--<a class="link-layout" href="/test" dir="rtl">تسهیلات</a>--%>
-
            <br />
            <br />
-           <a class="link-layout" href="loans_file.jsp" dir="rtl">اعطلای تسهیلات</a>
+           <%--<a class="link-layout" href="loans_file.jsp" dir="rtl">اعطلای تسهیلات</a>--%>
+           <a class="link-layout" href="/loadLoanTypes" dir="rtl">اعطلای تسهیلات</a>
        </div>
    </div>
 

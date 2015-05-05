@@ -29,14 +29,16 @@
                     <input type="text" name="maximum_amount" dir="rtl" id="maximum_amount_id">
                     <p dir="rtl"></p>
                     <div style="text-align: left">
-                        <button   class="btn-large btn-inverse" onclick="addCondition()">ثبت</button>
+                        <button class="btn-large btn-inverse" onclick="addCondition()">ثبت</button>
                         <%--<input type="button" value="ثبت"  class="btn-large btn-inverse" onclick="addCondition()">--%>
                     </div>
                 <%--</form>--%>
             </div>
         </div>
+        <br/><br/>
+        <div class="error" id="error_id_2"></div>
         <div>
-            <form action="/submitLoanType">
+            <form action="/submitLoanType" name="conditions_form">
                 <input type="hidden" name="loan_type_name" value="<% out.print(request.getParameter("loan_type_name"));%>"/>
                 <input type="hidden" name="interest_rate" value="<% out.print(request.getParameter("interest_rate"));%>"/>
                 <input type="hidden" name="row_count" id="row_count_id"/>
@@ -51,8 +53,8 @@
                 </table>
                 <p dir="rtl"></p>
                 <div style="text-align: center" >
-                    <input type="submit" value="ثبت نهایی"  class="btn-large btn-inverse">
-            </div>
+                    <input type="button" value="ثبت نهایی"  class="btn-large btn-inverse" onclick="checkRowNum()">
+                </div>
             </form>
         </div>
     </body>

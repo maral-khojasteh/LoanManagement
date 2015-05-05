@@ -51,6 +51,18 @@
         <servlet-class>com.dotinschool.controller.SubmitLoanTypeServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>LoadLoanTypes</servlet-name>
+        <servlet-class>com.dotinschool.controller.LoadLoanTypesServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchCustomer</servlet-name>
+        <servlet-class>com.dotinschool.controller.SearchCustomerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SubmitLoanFile</servlet-name>
+        <servlet-class>com.dotinschool.controller.SubmitLoanFileServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>Test</servlet-name>
         <servlet-class>com.dotinschool.controller.TestServlet</servlet-class>
     </servlet>
@@ -98,6 +110,18 @@
     <servlet-mapping>
         <servlet-name>SubmitLoanType</servlet-name>
         <url-pattern>/submitLoanType</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadLoanTypes</servlet-name>
+        <url-pattern>/loadLoanTypes</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchCustomer</servlet-name>
+        <url-pattern>/searchCustomer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SubmitLoanFile</servlet-name>
+        <url-pattern>/submitLoanFile</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Test</servlet-name>

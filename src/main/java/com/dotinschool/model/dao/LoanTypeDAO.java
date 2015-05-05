@@ -1,11 +1,9 @@
 package com.dotinschool.model.dao;
 
+import com.dotinschool.model.to.GrantCondition;
 import com.dotinschool.model.to.LoanType;
 import com.dotinschool.util.HibernateUtil;
-import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
@@ -15,12 +13,20 @@ import java.util.List;
  */
 public class LoanTypeDAO {
 
-    public void save(LoanType loanType) {
+    public void save(LoanType loanType, List<GrantCondition> grantConditionsList) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
-        session.saveOrUpdate(loanType);
-        session.getTransaction().commit();
+        try {
+            for(GrantCondition grantCondition: grantConditionsList){
+                session.saveOrUpdate(grantCondition);
+            }
+            session.saveOrUpdate(loanType);
+            session.getTransaction().commit();
+        }catch (RuntimeException e) {
+            session.getTransaction().rollback();
+            throw e;
+        }
     }
 
     public void delete(LoanType loanType) {
