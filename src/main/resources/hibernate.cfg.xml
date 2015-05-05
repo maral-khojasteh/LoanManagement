@@ -20,6 +20,10 @@
 
         <mapping class="com.dotinschool.model.to.LoanType" />
         <mapping class="com.dotinschool.model.to.GrantCondition" />
+        <mapping class="com.dotinschool.model.to.LoanFile" />
+        <mapping class="com.dotinschool.model.to.Customer" />
+        <mapping class="com.dotinschool.model.to.Company" />
+        <mapping class="com.dotinschool.model.to.Person" />
 
     </session-factory>
 </hibernate-configuration>

@@ -19,7 +19,7 @@
            <table>
 
                <% List<LoanType> loanTypes = (List<LoanType>) request.getAttribute("loanTypes"); %>
-               <% out.print();%>
+               <% out.println();%>
                <% for(LoanType loanType: loanTypes) { %>
                     <tr>
                         <td>

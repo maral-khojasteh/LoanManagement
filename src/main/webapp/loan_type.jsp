@@ -4,14 +4,17 @@
     <head lang="en">
         <meta charset="UTF-8">
         <title dir="rtl">ثبت نوع تسهیلات</title>
+        <script language="JavaScript" src="js/main.js"></script>
         <link rel="stylesheet" href="assets/css/bootstrap.css" type="text/css"  />
         <link rel="stylesheet" href="css/my-css.css" type="text/css"  />
     </head>
     <body class="main-background container-fluid">
 
         <div class="form-box">
+            <div class="error" id="error_id"></div>
             <div class="form-content">
-                <form class="container-fluid" dir="rtl" action="/submitLoanType">
+                <%--<form class="container-fluid" dir="rtl" action="/submitLoanType">--%>
+                <form name="loan_type_form" class="container-fluid" dir="rtl" action="/grant_conditions.jsp">
                     <label dir="rtl">نام نوع تسهیلات:</label>
                     <input type="text" name="loan_type_name" dir="rtl">
                     <p dir="rtl"></p>
@@ -19,7 +22,7 @@
                     <input type="text" name="interest_rate" dir="rtl">
                     <p dir="rtl"></p>
                     <div style="text-align: left">
-                        <input type="submit" value="ثبت"  class="btn-large btn-inverse">
+                        <input type="button" value="ثبت"  class="btn-large btn-inverse" onclick="validateLoanType()">
                     </div>
                 </form>
             </div>
