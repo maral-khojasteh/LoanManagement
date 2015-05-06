@@ -1,12 +1,19 @@
 package com.dotinschool.model.dao;
 
 import com.dotinschool.model.to.Person;
+import com.dotinschool.util.HibernateUtil;
 import com.mysql.jdbc.PreparedStatement;
+import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Maral Khojasteh
@@ -15,20 +22,15 @@ public class PersonDAO extends CustomerDAO {
 
     public void insert(Person person) throws SQLException {
         super.insert(person);
-        PreparedStatement statement = null;
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
         try {
-            statement = (PreparedStatement) getConnection().prepareStatement("INSERT INTO person VALUES (?, ?, ?, ?, ?, ?)");
-            statement.setLong(1, person.getId());
-            statement.setString(2, person.getFirstName());
-            statement.setString(3, person.getLastName());
-            statement.setString(4, person.getFatherName());
-            statement.setDate(5, new Date(person.getBirthDate().getTime()));
-            statement.setString(6, person.getNationalCode());
-            statement.executeUpdate();
-        } finally {
-            if (statement != null) {
-                statement.close();
-            }
+            session.saveOrUpdate(person);
+            session.getTransaction().commit();
+        }catch (RuntimeException e) {
+            session.getTransaction().rollback();
+            throw e;
         }
     }
 
@@ -129,5 +131,30 @@ public class PersonDAO extends CustomerDAO {
             persons.add(person);
         }
         return persons;
+    }
+
+    public List<Person> findByCustomerNumber(String customerNumber){
+
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
+//        Query query = session.createQuery("from Person p where p.customerNumber = :customerNumber");
+//        query.setString("customerNumber", customerNumber);
+//        return query.list();
+        Criteria criteria = session.createCriteria(Person.class);
+        criteria.add(Restrictions.eq("customerNumber", customerNumber));
+        List result = criteria.list();
+        session.getTransaction().commit();
+        return result;
+    }
+
+    public Person findById(Long id) {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        Person person = (Person) session.load(Person.class, id);
+        Hibernate.initialize(person.getCustomerNumber());
+        session.getTransaction().commit();
+        return person;
     }
 }

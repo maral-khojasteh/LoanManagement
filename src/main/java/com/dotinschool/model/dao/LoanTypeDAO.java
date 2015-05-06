@@ -42,6 +42,8 @@ public class LoanTypeDAO {
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         LoanType loanType = (LoanType) session.load(LoanType.class, id);
+        Hibernate.initialize(loanType.getConditions());
+        session.getTransaction().commit();
         return loanType;
     }
 
@@ -68,6 +70,8 @@ public class LoanTypeDAO {
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         Query query = session.createQuery("from LoanType");
-        return query.list();
+        List result = query.list();
+        session.getTransaction().commit();
+        return result;
     }
 }

@@ -3,16 +3,23 @@ package com.dotinschool.test;
 
 import com.dotinschool.model.dao.LoanTypeDAO;
 import com.dotinschool.model.to.LoanType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.SQLException;
+
 
 /**
  * Created by Maral ito on 4/23/2015.
  */
 public class TestDAO {
 
+    static Logger logger = LogManager.getLogger(TestDAO.class);
+
     public static void main(String[] args) throws SQLException {
 
+        logger.error("Ey Vay!");
+        logger.info("Maral is here!");
 
 //        LoanTypeDAO loanTypeDAO = new LoanTypeDAO();
 //
@@ -42,10 +49,10 @@ public class TestDAO {
 //        grantConditionDAO.save(condition2);
 
         System.out.println("Test");
-
-        LoanTypeDAO loanTypeDAO = new LoanTypeDAO();
-        LoanType loanType = loanTypeDAO.findById(1L);
-        System.out.println("LoanType (id = 1): " + loanType);
+//
+//        LoanTypeDAO loanTypeDAO = new LoanTypeDAO();
+//        LoanType loanType = loanTypeDAO.findById(1L);
+//        System.out.println("LoanType (id = 1): " + loanType);
 
 
     }

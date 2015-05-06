@@ -5,6 +5,7 @@ import com.dotinschool.model.to.Person;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Maral ito on 4/23/2015.
@@ -37,6 +38,13 @@ public class PersonService extends CustomerService{
         return personDAO.find(firstName, lastName, nationalCode, customerNumber);
     }
 
+    public List<Person> findByCustomerNumber(String customerNumber){
+        return personDAO.findByCustomerNumber(customerNumber);
+    }
+
+    public Person findById(Long id){
+        return personDAO.findById(id);
+    }
 //    public void closeConnection() throws Exception {
 //        personDAO.close();
 //    }

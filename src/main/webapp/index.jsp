@@ -21,7 +21,7 @@
            <br />
            <br />
            <%--<a class="link-layout" href="loans_file.jsp" dir="rtl">اعطلای تسهیلات</a>--%>
-           <a class="link-layout" href="/loadLoanTypes" dir="rtl">اعطلای تسهیلات</a>
+           <a class="link-layout" href="/loadLoanTypes" dir="rtl">اعطای تسهیلات</a>
        </div>
    </div>
 

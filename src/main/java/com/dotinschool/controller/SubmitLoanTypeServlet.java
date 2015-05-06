@@ -3,6 +3,8 @@ package com.dotinschool.controller;
 import com.dotinschool.model.bl.LoanTypeService;
 import com.dotinschool.model.to.GrantCondition;
 import com.dotinschool.model.to.LoanType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,6 +23,8 @@ import java.util.Set;
  */
 public class SubmitLoanTypeServlet extends HttpServlet {
 
+    private static Logger logger = LogManager.getLogger(SubmitLoanTypeServlet.class);
+
     private LoanTypeService loanTypeService;
 //    private GrantConditionService grantConditionService;
 
@@ -32,6 +36,7 @@ public class SubmitLoanTypeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        logger.info("SubmitLoanType Servlet Called!");
         try {
             Integer.parseInt(request.getParameter("row_count").trim());
         }catch (NumberFormatException e){

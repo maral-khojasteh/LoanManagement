@@ -1,25 +1,25 @@
 package com.dotinschool.model.dao;
 
-import com.dotinschool.model.to.GrantCondition;
+import com.dotinschool.model.to.LoanFile;
 import com.dotinschool.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 /**
- * Created by Maral ito on 4/30/2015.
+ * @author Maral Khojasteh
  */
-public class GrantConditionDAO {
+public class LoanFileDao {
 
-    public void save(GrantCondition grantCondition) {
+    public void save(LoanFile loanFile) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         try {
-            session.saveOrUpdate(grantCondition);
+            session.saveOrUpdate(loanFile);
             session.getTransaction().commit();
         }catch (RuntimeException e) {
             session.getTransaction().rollback();
+            throw e;
         }
     }
-
 }

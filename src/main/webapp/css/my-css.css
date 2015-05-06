@@ -88,3 +88,9 @@
     background-color: #dddbd5;
     text-align: center;
 }
+
+.form-input-wide {
+    width:100%;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}

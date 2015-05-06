@@ -3,7 +3,7 @@
  */
 function validateLoanType(){
     var interestRate = loan_type_form.interest_rate.value;
-    var pattern = /[^0-9]^./;
+    var pattern = /[^0-9.]/;
     var result = pattern.test(interestRate);
   if(loan_type_form.loan_type_name.value == ""){
       document.getElementById("error_id").innerHTML = "<p dir='rtl' align='center'>وارد کردن نام نوع تسهیلات اجباری است</p>"
@@ -77,6 +77,11 @@ function addCondition(){
         minAmountCell.innerHTML = "<input class=\"input-table\" name=\"minimum_amount\" type=\"text\" value=\"" + document.getElementById("minimum_amount_id").value + "\" readonly/>";
         maxAmountCell.innerHTML = "<input class=\"input-table\" name=\"maximum_amount\" type=\"text\" value=\"" + document.getElementById("maximum_amount_id").value + "\" readonly/>";
         document.getElementById("row_count_id").value = table.rows.length - 1;
+        document.getElementById("condition_name_id").value = "";
+        document.getElementById("minimum_days_id").value = "";
+        document.getElementById("maximum_days_id").value = "";
+        document.getElementById("minimum_amount_id").value = "";
+        document.getElementById("maximum_amount_id").value = "";
     }
 }
 
@@ -90,5 +95,27 @@ function checkRowNum(){
     }
 }
 
+function validateLoanFileValue(){
+    var duration = document.getElementById("contract_duration_id").value;
+    var amount = document.getElementById("contract_amount_id").value;
+    var pattern = /[^0-9]/;
+    var durationIsNotNumerical = pattern.test(duration);
+    var amountIsNotNumerical = pattern.test(amount);
+    if(duration == ""){
+        document.getElementById("error_id").innerHTML = "<p dir='rtl' align='center'>وارد کردن مدت قرارداد اجباری است</p>";
+    }
+    else if(amount == ""){
+        document.getElementById("error_id").innerHTML = "<p dir='rtl' align='center'>وارد کردن مبلغ قرارداد اجباری است</p>";
+    }
+    else if(durationIsNotNumerical){
+        document.getElementById("error_id").innerHTML = "<p dir='rtl' align='center'>مدت قرارداد باید عدد باشد</p>";
+    }
+    else if(amountIsNotNumerical){
+        document.getElementById("error_id").innerHTML = "<p dir='rtl' align='center'>مبلغ قرارداد باید عدد باشد</p>";
+    }
+    else{
+        loan_file_form.submit();
+    }
+}
 
 

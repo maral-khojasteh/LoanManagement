@@ -24,4 +24,8 @@ public class LoanTypeService {
     public List<LoanType> findAll() {
         return loanTypeDAO.findAll();
     }
+
+    public LoanType findById(Long id){
+        return loanTypeDAO.findById(id);
+    }
 }
