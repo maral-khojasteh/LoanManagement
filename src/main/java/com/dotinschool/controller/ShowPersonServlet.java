@@ -34,7 +34,7 @@ public class ShowPersonServlet extends HttpServlet {
                 "<body class=\"main-background\">\n" +
                 "<div id=\"submitPersonDiv\" class=\"form-box\">\n" +
                 "    <div class=\"form-content\">\n" +
-                "        <form name=\"submitPersonFrm\" class=\"container-fluid\" dir=\"rtl\" method=\"post\" action='/editPerson'    >\n" +
+                "        <form name=\"submitPersonFrm\" class=\"container-fluid\" dir=\"rtl\" action='/editPerson'    >\n" +
                 "            <input type=\"hidden\" name=\"id\" value=\"" + id +
                 "            \">\n" +
                 "            <input type=\"hidden\" name=\"customerNumberHidden\" value=\"" + customerNumber +

@@ -12,7 +12,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -35,7 +35,7 @@ public class SearchPersonServlet  extends HttpServlet {
         String customerNumber = request.getParameter("customerNumber").trim();
 
         try {
-            ArrayList<Person> persons = personService.findPerson(firstName, lastName, nationalCode, customerNumber);
+            List<Person> persons = personService.findPerson(firstName, lastName, nationalCode, customerNumber);
             String body = "";
             if(persons.size() == 0){
                 body += "<tr>\n" +

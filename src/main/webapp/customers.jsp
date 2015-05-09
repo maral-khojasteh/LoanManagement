@@ -13,10 +13,10 @@
        <h3 style="font-family: tahoma" dir="rtl" align="center">لطفا نوع مشتری را انتخاب نمایید</h3>
        <div class="center">
            <br />
-           <a class="link-layout" href="individualCustomer.html" dir="rtl" >مشتری حقیقی</a>
+           <a class="link-layout" href="individualCustomer.jsp" dir="rtl" >مشتری حقیقی</a>
            <br />
            <br />
-           <a class="link-layout" href="legalCustomer.html" dir="rtl" >مشتری حقوقی</a>
+           <a class="link-layout" href="legalCustomer.jsp" dir="rtl" >مشتری حقوقی</a>
        </div>
    </div>
 

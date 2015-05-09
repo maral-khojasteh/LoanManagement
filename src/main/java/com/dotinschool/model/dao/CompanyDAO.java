@@ -1,121 +1,74 @@
 package com.dotinschool.model.dao;
 
 import com.dotinschool.model.to.Company;
-import com.mysql.jdbc.PreparedStatement;
+import com.dotinschool.util.HibernateUtil;
+import org.hibernate.*;
+import org.hibernate.criterion.Restrictions;
 
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Maral Khojasteh
  */
 public class CompanyDAO extends CustomerDAO {
 
-    public void insert(Company company) throws SQLException {
-        super.insert(company);
-        PreparedStatement statement = null;
+    public void save(Company company){
+
+        super.save(company);
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
         try {
-            statement = (PreparedStatement) getConnection().prepareStatement("INSERT INTO company VALUES (?, ?, ?, ?)");
-            statement.setLong(1, company.getId());
-            statement.setString(2, company.getName());
-            statement.setDate(3, new Date(company.getRegistrationDate().getTime()));
-            statement.setString(4, company.getEconomicCode());
-            statement.executeUpdate();
-        } finally {
-            if (statement != null) {
-                statement.close();
-            }
+            session.saveOrUpdate(company);
+            session.getTransaction().commit();
+        }catch (RuntimeException e) {
+            session.getTransaction().rollback();
+            throw e;
         }
     }
 
-    public void update(Company company) throws SQLException {
-        PreparedStatement statement = null;
-        try {
-            statement = (PreparedStatement) getConnection().prepareStatement("UPDATE company SET companyName = ?, registrationDate = ?, economicCode = ? WHERE id = ?");
-            statement.setString(1, company.getName());
-            statement.setDate(2, new Date(company.getRegistrationDate().getTime()));
-            statement.setString(3, company.getEconomicCode());
-            statement.setLong(4, company.getId());
-            statement.executeUpdate();
-        }finally {
-            if (statement != null){
-                statement.close();
-            }
-        }
+    public void delete(long id){
+
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        Company company = (Company) session.load(Company.class, id);
+        session.delete(company);
+        session.getTransaction().commit();
     }
 
-    public void delete(long id) throws SQLException {
-        PreparedStatement statement = null;
-        getConnection().setAutoCommit(false);
-        try {
-            statement = (PreparedStatement) getConnection().prepareStatement("DELETE FROM company WHERE id = ?");
-            statement.setLong(1, id);
-            statement.executeUpdate();
-        } finally {
-            if (statement != null) {
-                statement.close();
-            }
-        }
-        super.delete(id);
-        getConnection().commit();
+    public boolean doesExistEconomicCode(String economicCode){
+
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        Query query = session.createQuery("from Company where economicCode = :economicCode");
+        query.setString("economicCode", economicCode);
+        Iterator iterator = query.iterate();
+        boolean result = iterator.hasNext();
+        session.getTransaction().commit();
+        return result;
     }
 
-    public boolean doesExistEconomicCode(String economicCode) throws SQLException {
+    public List<Company> find(String companyName, String economicCode, String customerNumber){
 
-        PreparedStatement statement = null;
-        try {
-            statement = (PreparedStatement) getConnection().prepareStatement("SELECT count(*) from company WHERE economicCode = ?");
-            statement.setString(1, economicCode);
-            ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            return resultSet.getInt(1) > 0;
-        }finally {
-            if(statement != null){
-                statement.close();
-            }
-        }
-    }
-
-    public ArrayList<Company> find(String companyName, String economicCode, String customerNumber) throws SQLException {
-        PreparedStatement statement = null;
-        String sqlStatement = "SELECT co.*, c.customerNumber from company co INNER JOIN customer c on co.id = c.id WHERE 1 = 1";
-        int counter = 0;
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(Company.class);
         if(!companyName.equals("")){
-            sqlStatement = sqlStatement.concat(" AND co.companyName LIKE ?");
-        }
-        if(!economicCode.equals("")){
-            sqlStatement = sqlStatement.concat(" AND co.economicCode LIKE ?");
-        }
-        if(!customerNumber.equals("")){
-            sqlStatement = sqlStatement.concat(" AND c.customerNumber LIKE ?");
-        }
-        statement = (PreparedStatement) getConnection().prepareStatement(sqlStatement);
-        if(!companyName.equals("")){
-            counter +=1;
-            statement.setString(counter , "%" + companyName + "%");
+            criteria.add(Restrictions.like("companyName", companyName));
         }
         if (!economicCode.equals("")){
-            counter +=1;
-            statement.setString(counter , "%" + economicCode + "%");
+            criteria.add(Restrictions.like("economicCode", economicCode));
+
         }
         if(!customerNumber.equals("")){
-            counter +=1;
-            statement.setString(counter , "%" + customerNumber + "%");
+            criteria.add(Restrictions.like("customerNumber", customerNumber));
         }
-        ResultSet resultSet = statement.executeQuery();
-        ArrayList<Company> companies = new ArrayList<Company>();
-        while (resultSet.next()){
-            Company company = new Company();
-            company.setId(resultSet.getLong("id"));
-            company.setName(resultSet.getString("companyName"));
-            company.setEconomicCode(resultSet.getString("economicCode"));
-            java.util.Date date = resultSet.getTimestamp("registrationDate");
-            company.setRegistrationDate(date);
-            company.setCustomerNumber(resultSet.getString("customerNumber"));
-            companies.add(company);
-        }
+        List companies = criteria.list();
+        session.getTransaction().commit();
         return companies;
     }
 }

@@ -2,8 +2,6 @@ package com.dotinschool.model.bl;
 
 import com.dotinschool.model.dao.CustomerDAO;
 
-import java.sql.SQLException;
-
 /**
  * @author Maral Khojasteh
  */
@@ -15,7 +13,7 @@ public class CustomerService {
         customerDAO = new CustomerDAO();
     }
 
-    public String generateCustomerNumber() throws SQLException {
+    public String generateCustomerNumber(){
         if (customerDAO.selectMaxId() == 0){
             return String.valueOf(1);
         }

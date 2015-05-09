@@ -84,6 +84,7 @@ public class EditPersonServlet extends HttpServlet {
             person.setFatherName(fatherName);
             person.setNationalCode(nationalCode);
             person.setBirthDate(date);
+            person.setCustomerNumber(customerNumber);
             personService.editPerson(person);
             String message = "Customer " + customerNumber + " is edited successfully";
             generateResultPage(request, response, "<h3 class='success' dir='ltr' align='center'>" + message + "</h3>", false);
@@ -91,6 +92,11 @@ public class EditPersonServlet extends HttpServlet {
             generateResultPage(request, response, "<h3 class='error' dir='ltr' align='center'>Internal Server Error!</h3>", true);
         }
     }
+
+//    @Override
+//    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        doGet(request, response);
+//    }
 
     private void generateResultPage(HttpServletRequest request, HttpServletResponse response, String body, boolean isError) throws IOException {
         long id = new Long(request.getParameter("id").trim());

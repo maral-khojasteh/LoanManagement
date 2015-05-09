@@ -1,61 +1,36 @@
 package com.dotinschool.model.dao;
 
 import com.dotinschool.model.to.Customer;
-import com.mysql.jdbc.PreparedStatement;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import com.dotinschool.util.HibernateUtil;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  * @author Maral Khojasteh
  */
-public class CustomerDAO extends BaseDAO {
+public class CustomerDAO{
 
-    public void insert(Customer customer) throws SQLException {
-        PreparedStatement statement = null;
+    public void save(Customer customer){
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
         try {
-            statement = (PreparedStatement) getConnection().prepareStatement("INSERT INTO customer (id, customerNumber) VALUES (NULL, ?)", Statement.RETURN_GENERATED_KEYS);
-            statement.setString(1, customer.getCustomerNumber());
-            statement.executeUpdate();
-            ResultSet resultSet = statement.getGeneratedKeys();
-            resultSet.next();
-            Long id = Long.valueOf(resultSet.getInt(1));
-            customer.setId(id);
-        } finally {
-            if (statement != null) {
-                statement.close();
-            }
+            session.saveOrUpdate(customer);
+            session.getTransaction().commit();
+        }catch (RuntimeException e) {
+            session.getTransaction().rollback();
+            throw e;
         }
     }
 
-    public void delete(long id) throws SQLException {
-        PreparedStatement statement = null;
-        try {
-            statement = (PreparedStatement) getConnection().prepareStatement("DELETE FROM customer WHERE id = ?");
-            statement.setLong(1, id);
-            statement.executeUpdate();
-        } finally {
-            if (statement != null) {
-                statement.close();
-            }
-        }
-    }
-
-    public long selectMaxId() throws SQLException {
-
-        PreparedStatement statement = null;
-        try {
-            statement = (PreparedStatement) getConnection().prepareStatement("select max(id) from customer");
-            ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()){
-                return resultSet.getInt(1);
-            }
-            return 0;
-        }finally {
-            if(statement != null){
-                statement.close();
-            }
-        }
+    public long selectMaxId(){
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        Query query = session.createQuery("select max(id) from Customer");
+        Long maxId = (Long) query.list().get(0);
+        session.getTransaction().commit();
+        return maxId;
     }
 }

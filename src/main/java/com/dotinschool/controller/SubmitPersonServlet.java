@@ -3,12 +3,12 @@ package com.dotinschool.controller;
 import com.dotinschool.model.bl.PersonService;
 import com.dotinschool.model.to.Person;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -36,33 +36,38 @@ public class SubmitPersonServlet extends HttpServlet {
 
             String firstName = request.getParameter("firstName").trim();
             if (firstName.equals("")) {
-                generateResultPage(response, "<h3 class='error' dir='ltr' align='center'>First name cannot be empty!</h3>");
-                return;
+                forwardToResultPage("وارد کردن نام مشتری اجباری است", request, response, true);
+//                generateResultPage(response, "<h3 class='error' dir='ltr' align='center'>First name cannot be empty!</h3>");
+//                return;
             }
 
             String lastName = request.getParameter("lastName").trim();
             if (lastName.equals("")) {
-                generateResultPage(response, "<h3 class='error' dir='ltr' align='center'>Last name cannot be empty!</h3>");
-                return;
+                forwardToResultPage("وارد کردن نام خانوادگی مشتری اجباری است", request, response, true);
+//                generateResultPage(response, "<h3 class='error' dir='ltr' align='center'>Last name cannot be empty!</h3>");
+//                return;
             }
 
             String fatherName = request.getParameter("fatherName").trim();
             if (fatherName.equals("")) {
-                generateResultPage(response, "<h3 class='error' dir='ltr' align='center'>Father name cannot be empty!</h3>");
-                return;
+                forwardToResultPage("وارد کردن نام پدر اجباری است", request, response, true);
+//                generateResultPage(response, "<h3 class='error' dir='ltr' align='center'>Father name cannot be empty!</h3>");
+//                return;
             }
 
             String nationalCode = request.getParameter("nationalCode").trim();
             try {
                 Double.parseDouble(nationalCode);
             } catch (NumberFormatException e) {
-                generateResultPage(response, "<h3 class='error' dir='ltr' align='center'>Invalid Format for National Code!</h3>");
-                return;
+                forwardToResultPage("وارد کردن کد ملی اجباری است", request, response, true);
+//                generateResultPage(response, "<h3 class='error' dir='ltr' align='center'>Invalid Format for National Code!</h3>");
+//                return;
             }
 
             if (personService.doesExistNationalCode(nationalCode)) {
-                generateResultPage(response, "<h3 class='error' dir='ltr' align='center'>Duplicate National Code!</h3>");
-                return;
+                forwardToResultPage("این کد ملی قبلا در سیستم ثبت شده است", request, response, true);
+//                generateResultPage(response, "<h3 class='error' dir='ltr' align='center'>Duplicate National Code!</h3>");
+//                return;
             }
 
             String dateString = request.getParameter("birthDate");
@@ -71,8 +76,9 @@ public class SubmitPersonServlet extends HttpServlet {
             try {
                 date = format.parse(dateString);
             } catch (ParseException e) {
-                generateResultPage(response, "<h3 class='error' dir='ltr' align='center'>Invalid Date Format!</h3>");
-                return;
+                forwardToResultPage("فرمت تاریخ نامعتبر است", request, response, true);
+//                generateResultPage(response, "<h3 class='error' dir='ltr' align='center'>Invalid Date Format!</h3>");
+//                return;
             }
 
             person.setFirstName(firstName);
@@ -82,22 +88,38 @@ public class SubmitPersonServlet extends HttpServlet {
             person.setBirthDate(date);
             person.setCustomerNumber(personService.generateCustomerNumber());
             personService.insertPerson(person);
-            String message = "Customer Saved! <br /> Customer Number: " + person.getCustomerNumber();
-            generateResultPage(response, "<h3 class='success' dir='ltr' align='center'>" + message + "</h3>");
+            forwardToResultPage("مشتری با شماره: " + person.getCustomerNumber() + " با موفقیت ثبت شد", request, response, false);
+            forwardToResultPage("مشتری با موفقیت ثبت شد"+ "\n" + "شماره مشتری: " + person.getCustomerNumber(), request, response, false);
+//            String message = "Customer Saved! <br /> Customer Number: " + person.getCustomerNumber();
+//            generateResultPage(response, "<h3 class='success' dir='ltr' align='center'>" + message + "</h3>");
 
         } catch (SQLException ex) {
-            generateResultPage(response, "<h3 class='error' dir='ltr' align='center'>Internal Server Error!</h3>");
+            forwardToResultPage("خطایی در سیستم رخ داده است", request, response, true);
+//            generateResultPage(response, "<h3 class='error' dir='ltr' align='center'>Internal Server Error!</h3>");
         }
 
     }
 
-    private void generateResultPage(HttpServletResponse response, String body) throws IOException {
+//    private void generateResultPage(HttpServletResponse response, String body) throws IOException {
+//        response.setCharacterEncoding("UTF-8");
+//        String html = ResultPageHTML.RESULT_PAGE_TOP + body + ResultPageHTML.RESULT_PAGE_BOTTOM;
+//        html = html.replace("RETURN_ADDRESS", "/submitPerson.html");
+//        PrintWriter out = response.getWriter();
+//        out.println(html);
+//        out.flush();
+//    }
+
+    private void forwardToResultPage(String message, HttpServletRequest request, HttpServletResponse response, boolean isError) throws ServletException, IOException {
+        request.setAttribute("message", message);
+        if(isError){
+            request.setAttribute("statusClass", "error");
+        }
+        else{
+            request.setAttribute("statusClass", "success");
+        }
         response.setCharacterEncoding("UTF-8");
-        String html = ResultPageHTML.RESULT_PAGE_TOP + body + ResultPageHTML.RESULT_PAGE_BOTTOM;
-        html = html.replace("RETURN_ADDRESS", "/submitPerson.html");
-        PrintWriter out = response.getWriter();
-        out.println(html);
-        out.flush();
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/result.jsp");
+        dispatcher.forward(request, response);
     }
 
 }

@@ -4,7 +4,6 @@ import com.dotinschool.model.dao.PersonDAO;
 import com.dotinschool.model.to.Person;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,11 +18,11 @@ public class PersonService extends CustomerService{
     }
 
     public void insertPerson(Person person) throws SQLException {
-        personDAO.insert(person);
+        personDAO.save(person);
     }
 
     public void editPerson(Person person) throws SQLException {
-        personDAO.update(person);
+        personDAO.save(person);
     }
 
     public void deletePerson(long personId) throws SQLException {
@@ -34,7 +33,7 @@ public class PersonService extends CustomerService{
         return personDAO.doesExistNationalCode(nationalCode);
     }
 
-    public ArrayList<Person> findPerson(String firstName, String lastName, String nationalCode, String customerNumber) throws SQLException {
+    public List<Person> findPerson(String firstName, String lastName, String nationalCode, String customerNumber) throws SQLException {
         return personDAO.find(firstName, lastName, nationalCode, customerNumber);
     }
 
