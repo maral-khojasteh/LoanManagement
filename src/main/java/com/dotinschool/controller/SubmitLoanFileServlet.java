@@ -7,6 +7,8 @@ import com.dotinschool.model.bl.PersonService;
 import com.dotinschool.model.to.LoanFile;
 import com.dotinschool.model.to.LoanType;
 import com.dotinschool.model.to.Person;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,6 +22,8 @@ import java.util.List;
  * @author Maral Khojasteh
  */
 public class SubmitLoanFileServlet extends HttpServlet{
+
+    private static Logger logger = LogManager.getLogger(SubmitLoanTypeServlet.class);
 
     private GrantConditionService grantConditionService;
     private LoanTypeService loanTypeService;
@@ -36,6 +40,8 @@ public class SubmitLoanFileServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        logger.info("SubmitLoanFile Servlet Called!");
+
         String loanTypeId = request.getParameter("loan_type").trim();
         String customerId = request.getParameter("customer_id").trim();
         String contractAmount = request.getParameter("contract_amount").trim();
@@ -47,7 +53,7 @@ public class SubmitLoanFileServlet extends HttpServlet{
         request.setAttribute("loanTypes", loanTypes);
 
         boolean isFind = grantConditionService.find(loanType, Double.valueOf(contractAmount), Integer.valueOf(contractDuration));
-        System.out.println("isFind" + isFind);
+
         if(isFind){
             LoanFile loanFile = new LoanFile();
             loanFile.setAmount(Double.valueOf(contractAmount));
@@ -55,11 +61,13 @@ public class SubmitLoanFileServlet extends HttpServlet{
             loanFile.setLoanType(loanType);
             loanFile.setPerson(person);
             loanFileService.save(loanFile);
+            logger.info("Loan file saved successfully!");
             request.setAttribute("message", "پرونده تسهیلاتی با موفقیت ثبت شد");
             request.setAttribute("statusClass", "success");
             request.setAttribute("disabled", "disabled");
         }
         else{
+            logger.error("There is no grant condition for this request");
             request.setAttribute("message", "برای این درخواست شرط اعطایی یافت نشد");
             request.setAttribute("statusClass", "error");
             request.setAttribute("disabled", "");

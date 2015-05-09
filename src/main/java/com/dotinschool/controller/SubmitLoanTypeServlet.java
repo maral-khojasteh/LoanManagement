@@ -40,7 +40,7 @@ public class SubmitLoanTypeServlet extends HttpServlet {
         try {
             Integer.parseInt(request.getParameter("row_count").trim());
         }catch (NumberFormatException e){
-            forwardToResultPage("وارد کردن حداقل یک شرط اعطا اجباری است", request, response, true);
+            forwardToResultPage("وارد کردن حداقل یک شرط اعطا اجباری است", request, response, true, "One grant condition is required");
         }
         int rowCount = Integer.parseInt(request.getParameter("row_count").trim());
         String[] conditionNames = request.getParameterValues("condition_name");
@@ -59,7 +59,7 @@ public class SubmitLoanTypeServlet extends HttpServlet {
                 grantCondition.setMinimumAmount(Double.valueOf(minimumAmount[rowCount - 1]));
                 grantCondition.setMaximumAmount(Double.valueOf(maximumAmount[rowCount - 1]));
             }catch (NumberFormatException e){
-                forwardToResultPage("وارد کردن حداقل و حداکثر مبلغ و مدت قرارداد اجباری است. مبلغ و مدت حتما باید عدد باشد", request, response, true);
+                forwardToResultPage("وارد کردن حداقل و حداکثر مبلغ و مدت قرارداد اجباری است. مبلغ و مدت حتما باید عدد باشد", request, response, true, "Amount and duration of contract are necessary. they must be number.");
             }
 //            try {
 //                grantConditionService.saveGrantCondition(grantCondition);
@@ -77,25 +77,27 @@ public class SubmitLoanTypeServlet extends HttpServlet {
         try {
             loanType.setInterestRate(Double.valueOf(interestRate));
         }catch (NumberFormatException e){
-            forwardToResultPage("وارد کردن نرخ سود اجباری است. نرخ سود حتما باید عدد باشد", request, response, true);
+            forwardToResultPage("وارد کردن نرخ سود اجباری است. نرخ سود حتما باید عدد باشد", request, response, true, "Interest rate is necessary and must be number");
         }
         loanType.setConditions(grantConditions);
         try {
             loanTypeService.saveLoanType(loanType, grantConditionsList);
         }catch (ConstraintViolationException e){
-            forwardToResultPage("وارد کردن نام نوع تسهیلات و نام شرط اعطا اجباری است", request, response, true);
+            forwardToResultPage("وارد کردن نام نوع تسهیلات و نام شرط اعطا اجباری است", request, response, true, "Loan type name and condition name are necessary");
         }
-        forwardToResultPage("نوع تسهیلات و شرایط اعطا با موفقیت ثبت شد", request, response, false);
+        forwardToResultPage("نوع تسهیلات و شرایط اعطا با موفقیت ثبت شد", request, response, false, "Loan type saved!");
 
     }
 
-    private void forwardToResultPage(String message, HttpServletRequest request, HttpServletResponse response, boolean isError) throws ServletException, IOException {
+    private void forwardToResultPage(String message, HttpServletRequest request, HttpServletResponse response, boolean isError, String logMessage) throws ServletException, IOException {
         request.setAttribute("message", message);
         if(isError){
             request.setAttribute("statusClass", "error");
+            logger.error(message);
         }
         else{
             request.setAttribute("statusClass", "success");
+            logger.info(message);
         }
         response.setCharacterEncoding("UTF-8");
         RequestDispatcher dispatcher = request.getRequestDispatcher("/result.jsp");
