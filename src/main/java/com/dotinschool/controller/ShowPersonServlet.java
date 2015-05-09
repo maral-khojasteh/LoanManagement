@@ -28,6 +28,7 @@ public class ShowPersonServlet extends HttpServlet {
                 "<head lang=\"en\">\n" +
                 "    <meta charset=\"UTF-8\">\n" +
                 "    <title dir=\"rtl\">ویرایش مشتری</title>\n" +
+                "    <script language=\"JavaScript\" src=\"js/main.js\"></script>" +
                 "    <link rel=\"stylesheet\" href=\"assets/css/bootstrap.css\" type=\"text/css\"  />\n" +
                 "    <link rel=\"stylesheet\" href=\"css/my-css.css\" type=\"text/css\"  />\n" +
                 "</head>\n" +
@@ -70,11 +71,11 @@ public class ShowPersonServlet extends HttpServlet {
                 "            \">\n" +
                 "            <p dir=\"rtl\"></p>\n" +
                 "            <label dir=\"rtl\">کد ملی: </label>\n" +
-                "            <input type=\"text\" name=\"nationalCode\" dir=\"rtl\" value=\"" + nationalCode +
+                "            <input type=\"text\" name=\"nationalCode\" id=\"national_code_id\" dir=\"rtl\" value=\"" + nationalCode +
                 "            \">\n" +
                 "            <p dir=\"rtl\"></p>\n" +
                 "            <div style=\"text-align: left\">\n" +
-                "                <input type=\"submit\" value=\"ثبت\"  class=\"btn-large btn-inverse\">\n" +
+                "                <input type=\"button\" value=\"ثبت\" onclick=\"validateNationalCode()\" class=\"btn-large btn-inverse\">\n" +
                 "            </div>\n" +
                 "        </form>\n" +
                 "    </div>\n" +

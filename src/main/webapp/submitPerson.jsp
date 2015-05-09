@@ -4,6 +4,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title dir="rtl">ثبت مشتری</title>
+    <script language="JavaScript" src="js/main.js"></script>
     <link rel="stylesheet" href="assets/css/bootstrap.css" type="text/css"  />
     <link rel="stylesheet" href="css/my-css.css" type="text/css"  />
 </head>
@@ -24,10 +25,10 @@
                 <input type="date" name="birthDate" dir="rtl">
                 <p dir="rtl"></p>
                 <label dir="rtl">کد ملی: </label>
-                <input type="text" name="nationalCode" dir="rtl">
+                <input type="text" name="nationalCode" dir="rtl" id="national_code_id">
                 <p dir="rtl"></p>
                 <div style="text-align: left">
-                    <input type="submit" value="ثبت"  class="btn-large btn-inverse">
+                    <input type="button" value="ثبت"  class="btn-large btn-inverse" onclick="validateNationalCode()">
                 </div>
             </form>
         </div>

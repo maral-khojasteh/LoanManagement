@@ -118,4 +118,29 @@ function validateLoanFileValue(){
     }
 }
 
+function validateNationalCode(){
+    var nationalCode = document.getElementById("national_code_id").value.trim();
+    var index1 = nationalCode.substring(0,1);
+    var index2 = nationalCode.substring(1,2);
+    var index3 = nationalCode.substring(2,3);
+    var index4 = nationalCode.substring(3,4);
+    var index5 = nationalCode.substring(4,5);
+    var index6 = nationalCode.substring(5,6);
+    var index7 = nationalCode.substring(6,7);
+    var index8 = nationalCode.substring(7,8);
+    var index9 = nationalCode.substring(8,9);
+    var sumResult = (1*index1) + (2*index2) + (3*index3) + (4*index4) + (5*index5) + (6*index6) + (7*index7) + (8*index8) + (9*index9);
+    var modulusResult = sumResult%11;
+    if(nationalCode.length != 10){
+        alert("کدملی باید 10 رقمی باشد");
+    }
+    else if (!(!(modulusResult != nationalCode.substring(9,10)) || !(modulusResult != 11 - nationalCode.substring(9,10)))){
+        alert("کد ملی معتبر نمی باشد");
+    }
+    else{
+        submitPersonFrm.submit();
+    }
+
+}
+
 
